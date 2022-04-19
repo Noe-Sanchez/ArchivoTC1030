@@ -146,13 +146,17 @@ class MyGame{
                 */
                 std::cout << turn+1 <<" "<< party[nowp].getId() <<" "<< party[nowp].getCasilla()+1;
                 party[nowp].moveCasilla(roll); 
+                 if (party[nowp].getCasilla()< 1){
+                    party[nowp].moveCasilla[casilla]
+                 }
+                    
                 std::cout << " " << roll << " " << board[party[nowp].getCasilla()].getType();
                 if(board[party[nowp].getCasilla()].getType() != 'N'){
                     party[nowp].moveCasilla(board[party[nowp].getCasilla()].getValue());
                 }
                 if(party[nowp].getCasilla() >= board.size()){
                     qend = true;
-                    party[nowp].setCasilla(board.size()-1);
+                    party[nowp].setCasilla(board.size()-1);     
                 }
                 std::cout << " " << party[nowp].getCasilla()+1 << std::endl;
                 if(qend == true){
