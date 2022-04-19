@@ -147,7 +147,7 @@ class MyGame{
                 std::cout << turn+1 <<" "<< party[nowp].getId() <<" "<< party[nowp].getCasilla()+1;
                 party[nowp].moveCasilla(roll); 
                  if (party[nowp].getCasilla()< 1){
-                    party[nowp].moveCasilla[casilla]
+                    party[nowp].moveCasilla(1);
                  }
                     
                 std::cout << " " << roll << " " << board[party[nowp].getCasilla()].getType();
