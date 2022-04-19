@@ -1,4 +1,0 @@
-Cosas por hacer:
-
--Terminar
-
