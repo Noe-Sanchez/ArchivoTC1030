@@ -14,3 +14,6 @@ salió el número 4, lo cuál lo llevaría a una casilla Normal, que sería la n
 6 2 3 6 S 3 -> Indica que en el turno 6 el jugador 2 estaba en la casilla 3, y que saco un número 6 
 en el dado, lo cuál debió llevarlo a la casilla 9, misma que tiene una serpiente y por ello retrocedió 
 6 casillas, quedando nuevamente en la casilla 3
+
+
+Para este programa utilizamos los conceptos vistos en clase, utilizamos clases con sus respectivos atributos y funciones asi como composicion. Nosotros decidimos hacer la tarea de la forma mas sencilla y es por eso que lo hicimos todo en un mismo archivo .cpp.
