@@ -35,14 +35,18 @@ class Sobre: public Envio{
 			ancho = _ancho;
 		}
 		double costo(){
-			return (largo*ancho);
+			return (largo*ancho*ne);
 		}
 		string getTipo(){
 			return("Sobre");
 		}
+		void operator +(){
+			this->ne++;
+			cout << ne << endl;
+		}
 		friend ostream& operator<< (ostream& out, const Sobre& sobre);
 	private:
-		int largo, ancho;
+		int largo, ancho, ne=1;
 };
 
 class Paquete: public Envio{
@@ -55,7 +59,7 @@ class Paquete: public Envio{
 			peso = _peso;
 		}
 		double costo(){
-			return (largo*ancho*profundidad*peso);
+			return (largo*ancho*profundidad*peso/10);
 		}
 		string getTipo(){
 			return("Paquete");
@@ -89,10 +93,23 @@ int main(){
 	//for(int l = 0; l < envios.size(); l++){
 	//	cout << "Costo del " << *envios[l] << ": " << envios[l]->costo() << ", Para: " << envios[l]->nombreD << ", De: " << envios[l]->nombreR << "\tDesde: " << envios[l]->ciudadR << "\tCon Codigo Postal: " << envios[l]->cpR << "\tHasta: " << envios[l]->ciudadD << "\tCon Codigo Postal: " << envios[l]->cpD << endl;	
 	//}
+	double suma = 0;
 	for(int l = 0; l < envios.size(); l++){
-		cout << "Costo del " << envios[l]->getTipo() << ": " << envios[l]->costo() << ", Para: " << envios[l]->nombreD << ", De: " << envios[l]->nombreR << "\tDesde: " << envios[l]->ciudadR << "\tCon Codigo Postal: " << envios[l]->cpR << "\tHasta: " << envios[l]->ciudadD << "\tCon Codigo Postal: " << envios[l]->cpD << endl;	
+		cout << "Costo del " << envios[l]->getTipo() << ": " << envios[l]->costo() << ", Para: " << envios[l]->nombreD << ", De: " << envios[l]->nombreR << " Desde: " << envios[l]->ciudadR << " Con Codigo Postal: " << envios[l]->cpR << " Hasta: " << envios[l]->ciudadD << " Con Codigo Postal: " << envios[l]->cpD << endl;	
+		suma += envios[l]->costo();
 	}
-
+	cout << "Costo total de los envios antes de la estampilla: " << suma << endl;
+	Sobre sobre3 = Sobre(string("Nallely"),string("Ivan"), string("Villas de Suiza"), string("Villas Tec"), string("Monterrey"), string("Monterrey"), string("Nuevo Le�n"), string("Nuevo Le�n"), string("66055"), string("34050"), 30, 20);
+	cout << sobre3.costo() << endl;
+	+sobre3;
+	+envios[0];
+	cout << sobre3.costo() << endl;
+	suma = 0;
+	for(int l = 0; l < envios.size(); l++){
+		cout << "Costo del " << envios[l]->getTipo() << ": " << envios[l]->costo() << ", Para: " << envios[l]->nombreD << ", De: " << envios[l]->nombreR << " Desde: " << envios[l]->ciudadR << " Con Codigo Postal: " << envios[l]->cpR << " Hasta: " << envios[l]->ciudadD << " Con Codigo Postal: " << envios[l]->cpD << endl;	
+		suma += envios[l]->costo();
+	}
+	cout << "Costo total de los envios despues de la estampilla: " << suma << endl;
 	//cout << "Costo del " << sobre1 << ": " << sobre1.costo() << ", Para: " << sobre1.nombreD << ", De: " << sobre1.nombreR << "\tDesde: " << sobre1.ciudadR << "\tCon Codigo Postal: " << sobre1.cpR << "\tHasta: " << sobre1.ciudadD << "\tCon Codigo Postal: " << sobre1.cpD << endl;
 	//cout << "Costo del " << paquete1 << ": " << paquete1.costo() << ", Para: " << paquete1.nombreD << ", De: " << paquete1.nombreR << "\tDesde: " << sobre1.ciudadR << "\tCon Codigo Postal: " << sobre1.cpR << "\tHasta: " << sobre1.ciudadD << "\tCon Codigo Postal: " << sobre1.cpD << endl;
 	return 0;
