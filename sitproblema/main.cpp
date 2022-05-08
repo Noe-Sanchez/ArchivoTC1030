@@ -76,8 +76,7 @@ class Serie:public Video{
             get<2>(*data) + ", " + to_string(temp);
             string out2 = "\nEpisodios: ";
             for(int e = 0; e < episodios.size();e++){
-                //out2 += "\n->" + to_string(get<0>(*episodios[e])) + ", " + get<1>(*episodios[e]) + ", " + get<2>(*episodios[e]) + ", " + to_string(get<3>(*episodios[e])) + ", " + to_string(get<4>(*episodios[e])) +  ", " + to_string(get<5>(*episodios[e])); 
-                out2 += "\n     ->" + get<2>(*episodios[e]);
+                out2 += "\n     ->" + get<2>(*episodios[e]) + ", " + to_string(get<4>(*episodios[e]));
             }
             return (out+out2);
         }
@@ -92,7 +91,7 @@ class Serie:public Video{
         }
         void setCali(float _cali){}
         void setDuracion(float _duracion){}
-        float getCali(){}
+        float getCali(){return 0;}
 };
 
 void leerArchivos(vector<Video*> &catalogo){
@@ -109,20 +108,23 @@ void leerArchivos(vector<Video*> &catalogo){
         catalogo.push_back(new Pelicula());
         int j = 0;
         while(getline(renglon, celda,',')){
-                switch(j++){                    case 0:
+                switch(j++){                    
+                case 0:
                     get<0>(*catalogo[i]->getPtr()) = stoi(celda, nullptr,10);
                     break;
                 case 1:
                     get<1>(*catalogo[i]->getPtr()) = celda;
                     break;
                 case 2:
-                    catalogo[i]->setCali(stof(celda));
+                    //cout << catalogo[i]->getCali() << endl;
+                    catalogo[i]->setDuracion(stof(celda));
+                    //cout << catalogo[i]->getCali() << endl;
                     break;
                 case 3:
                     get<2>(*catalogo[i]->getPtr()) = celda;
                     break;
                 case 4:
-                    catalogo[i]->setDuracion(stof(celda));
+                    catalogo[i]->setCali(stof(celda));
                     break;
             }
         }
@@ -204,28 +206,74 @@ void printVideos(vector<Video*> &catalogo){
     }
 }
 
-/*void pelisxCali(vector<Video*> &catalogo, float qcali){
+void pelisxCali(vector<Video*> &catalogo, float qcali){
     for(int n = 0; n < catalogo.size(); n++){
         if(catalogo[n]->getCali() == qcali){
-            cout << catalogo[n]->getData() << endl;
+            cout << "Pelicula: " << get<1>(*catalogo[n]->getPtr()) << endl;
         }
-        for(int k = 0; k < ((*(catalogo[n]->getEpisodio())).size()); k++){
-            if (get<5>(*(catalogo[n]->getEpisodio())[k]) == qcali ){
-                cout << get<3>(*(catalogo[n]->getEpisodio())[k]) << endl;
+    }
+}
+void vidsxCalioGenero(vector<Video*> &catalogo, float query){
+    for(int n = 0; n < catalogo.size(); n++){
+        if(catalogo[n]->getCali() == 0){
+            auto vvect = catalogo[n]->getEpisodio();
+            for(int k = 0; k < vvect.size(); k++){
+                if (get<4>(*vvect[k]) == query ){
+                    cout << get<2>(*vvect[k]) << endl;
+                }
+            }
+        }else{
+            if(catalogo[n]->getCali() == query){
+                cout << get<1>(*catalogo[n]->getPtr()) << endl;
             }
         }
     }
-}*/
+}
+void vidsxCalioGenero(vector<Video*> &catalogo, string query){
+    for(int n = 0; n < catalogo.size(); n++){
+        if(get<2>(*catalogo[n]->getPtr()) == query){
+            cout << get<1>(*catalogo[n]->getPtr()) << endl;
+        }
+    }
+}
+void epixCali(vector<Video*> &catalogo, float query){
+    for(int n = 0; n < catalogo.size(); n++){
+        if(catalogo[n]->getCali() == 0){
+            auto vvect = catalogo[n]->getEpisodio();
+            for(int k = 0; k < vvect.size(); k++){
+                if (get<4>(*vvect[k]) == query ){
+                    cout << "Episodio: " << get<2>(*vvect[k]) << endl;
+                }
+            }
+        }
+    }
+}
+void calificarVideo(vector<Video*> &catalogo, string qtitulo,float qcali){
+    for(int n = 0; n < catalogo.size(); n++){
+        if(catalogo[n]->getCali() == 0){
+            auto vvect = catalogo[n]->getEpisodio();
+            for(int k = 0; k < vvect.size(); k++){
+                if (get<2>(*vvect[k]) == qtitulo ){
+                    get<4>(*vvect[k]) = qcali;
+                }
+            }
+        }else{
+            if (get<1>(*catalogo[n]->getPtr()) == qtitulo){    
+                catalogo[n]->setCali(qcali);
+            }
+        }
+    }
+}
 
 int main(){
-    Pelicula peli(1298723, "Peli de prueba", "Drama", 46, 9.5);
+    /*Pelicula peli(1298723, "Peli de prueba", "Drama", 46, 9.5);
     Serie serie(1298723, "Serie de prueba", "Suspenso", 2);
 
     cout << "Hello world: Pelicula" << endl;
     cout << "Datos peli: " << peli.getData() << endl;
     cout << "Datos serie: " << serie.getData() << endl;
     Pelicula* peliptr = &peli; 
-
+    */
     vector<Video*> catalogo;
 
     int query = 0; bool boolvar = true;
@@ -237,12 +285,51 @@ int main(){
                 leerArchivos(catalogo);
                 cout << "Se leyeron les archives" << endl;
                 break;
-            /*case 4:
+            case 2:{
+                cout << "1.Genero\n2.Calificacion" << endl;
+
+                int opt;
+                cin >> opt;
+
+                if(opt == 1){
+                    cout << "Genero a buscar: ";
+                    string query;
+                    cin >> query;
+                    vidsxCalioGenero(catalogo,query);
+                }else if(opt == 2){
+                    cout << "Calificacion a buscar: ";
+                    float query;
+                    cin >> query;
+                    vidsxCalioGenero(catalogo,query);
+                }else{
+                    cout << "Opcion invalida" << endl;
+                }   
+                break;
+            }
+            case 3:
+                cout << "Calificacion a buscar: ";
+                float query;
+                cin >> query;
+                epixCali(catalogo,query);
+                break;
+            case 4:
                 cout << "Calificacion a buscar: ";
                 float qcali;
                 cin >> qcali;
                 pelisxCali(catalogo, qcali);
-                break;*/
+                break;
+            case 5:{
+                cout << "Titulo a calificar: ";
+                string qtitulo = "";
+                cin.ignore();
+                getline(cin, qtitulo);
+                cout << "Nueva calificacion: ";
+                float qcali;
+                cin >> qcali;
+
+                calificarVideo(catalogo, qtitulo, qcali);
+                break;
+            }
             case 6:
                 printVideos(catalogo);
                 break;
