@@ -278,7 +278,7 @@ int main(){
 
     int query = 0; bool boolvar = true;
     while(boolvar){
-        cout << "1.Cargar archivos\n2.Mostrar video con calificacion o genero\n3.Mostrar episodios por calificacion\n4.Mostrar peliculas con cierta calificacion\n5.Calificar video\n6.Mostrar videos\n7.Salir" << endl;
+        cout << "1.Cargar archivos.csv\n2.Mostrar video con calificacion o genero\n3.Mostrar episodios por calificacion\n4.Mostrar peliculas con cierta calificacion\n5.Calificar video\n6.Mostrar videos\n7.Salir" << endl;
         cin >> query;
         switch(query){
             case 1:
